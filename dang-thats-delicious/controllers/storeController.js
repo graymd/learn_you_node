@@ -7,7 +7,7 @@ const uuid = require('uuid');
 const multerOptions = {
   storage: multer.memoryStorage(),
   fileFilter(req, file, next) {
-    const isPhoto = filemimetype.startsWith('image/');
+    const isPhoto = file.mimetype.startsWith('image/');
     if (isPhoto) {
       next(null, true);
     } else {
@@ -46,8 +46,8 @@ exports.createStore = async (req, res) => {
   console.log(req.body);
   const store = await (new Store(req.body)).save();
   //await don't move on until save has happened
-  req.flash('success', `Successfully Created ${store.name}.  Care leave a review?`);
-  res.redirect(`/${store.slug}`);
+  req.flash('success', `Successfully Created ${store.name}.  Care to leave a review?`);
+  res.redirect(`/store/${store.slug}`);
 
 };
 
