@@ -18,7 +18,7 @@ const reviewSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: 'Your rview must have text'
+    required: 'Your review must have text!'
   },
   rating: {
     type: Number,
@@ -26,5 +26,13 @@ const reviewSchema = new mongoose.Schema({
     max: 5
   }
 });
+
+function autopopulate(next) {
+  this.populate('author');
+  next();
+}
+
+reviewSchema.pre('find', autopopulate);
+reviewSchema.pre('findOne', autopopulate);
 
 module.exports = mongoose.model('Review', reviewSchema);
